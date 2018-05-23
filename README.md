@@ -1,7 +1,8 @@
 # About Deep Learning
 
 * Deep learning Studies 
-* Related code ouput
+* Related code output
+* Pytorch examples
 
 will be uploaded here.
 
