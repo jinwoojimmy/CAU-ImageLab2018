@@ -86,4 +86,4 @@ Each activation function has own characteristic, and we should choose activation
     
    
 #### Graph     
-![image](./img/activation_func_graph.png)
+![image](https://github.com/jwcse/DeepLearning/blob/master/img/activation_func_graph.png)
