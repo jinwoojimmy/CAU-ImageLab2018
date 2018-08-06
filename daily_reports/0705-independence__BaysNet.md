@@ -78,7 +78,16 @@ Independencies can be recovered from the graph by looking at three types of stru
   
     If G is A→C←B, then knowing C couples A and B. In other words, A⊥B if C is unobserved, but A⊥̸B∣C if C is observed.
     
-    
+These structures clearly describe the independencies encoded by a three-variable Bayesian net. We can extend them to general networks by applying them recursively over any larger graph. This leads to a notion called **d-separation** (where d stands for directed).
+
+We say that Q, W are d-separated when variables O are observed if they are not connected by an active path. An undirected path in the Bayesian Network structure G is called *active* given observed variables O if for every consecutive triple of variables X,Y,Z on the path, one of the following holds:
+  - X←Y←Z, and Y is unobserved Y∉O
+  - X→Y→Z, and Y is unobserved Y∉O
+  - X←Y→Z, and Y is unobserved Y∉O
+  - X→Y←Z, and Y or any of its descendents are observed.
+  
+ The notion of d-separation is useful, because it lets us describe a large fraction of the dependencies that hold in our model.
+
 #### Reference :
 [Stanford CS 228: Probabilistic Graphical Models - Bays Net](https://ermongroup.github.io/cs228-notes/representation/directed/)
 
