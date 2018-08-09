@@ -53,5 +53,44 @@ This kind of training way has been used since 2006. However after 2010, as activ
 
 
 
+## Denoising Autoencoder(DAE)
+
+Denoising Autoencoder was published by Pascal Vincent and Yoshua Bengio, from paper "Extracting and Composing Robust Features with Denoising Autoencoder".
+
+Before that, Autoencoder had been used to extract important feature from the given input data utilizing supervised learning and also for pre-training.
+
+
+Then why the **"Denoising" Autoencoder** appeared?
+
+### Concept 
+
+ * Main Idea
+ 
+  Even though there is noise in the input data, if the important feature is maintained, then output can show good enough reconstructed data. 
+  
+  <img src="https://github.com/jwcse/DeepLearning/blob/master/img/DAE_concept.PNG" width="700" height="300">
+
+
+ * Process
+  1. Add denoise to original input. 
+  
+  2. Put noised input to Autoencoder.
+  
+  3. Train the noised input to resemble original input.
+
+  	
+### Effect of Denoise Ratio
+
+ <img src="https://github.com/jwcse/DeepLearning/blob/master/img/DAE_denoise_ratio.PNG" width="400" height="800">
+
+ 
+[referenced from here](https://laonple.blog.me/220891144201)
+
+
+
+
+[This video](https://www.youtube.com/watch?v=t2NQ_c5BFOc&feature=youtu.be) explains on DAE, of which speaker is co-author of the paper, Hugo Larochelle. 
+
+
 
 
