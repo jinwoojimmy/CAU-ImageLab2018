@@ -280,7 +280,13 @@ print(label[0])
 
 ```
 
+#### Result
 
+<img src="https://github.com/jwcse/DeepLearning/blob/master/img/DAE_ex_result.PNG" width="500" height="300">
+	
+
+
+### Reference
 [This video](https://www.youtube.com/watch?v=t2NQ_c5BFOc&feature=youtu.be) explains on DAE, of which speaker is co-author of the paper, Hugo Larochelle. 
 
 
