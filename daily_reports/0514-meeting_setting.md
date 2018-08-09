@@ -18,8 +18,9 @@ user account to access linux server which contains GPU and appropriate for runni
 - install pytorch
 - install PyCharm IDE
 
-3. Study on Pytorch Basics
-- Pytorch includes various kinds of computational library and methods.
+## Study on Pytorch Basics
+
+  - Pytorch includes various kinds of computational library and methods.
 
 ```python
   
