@@ -53,6 +53,10 @@ This kind of training way has been used since 2006. However after 2010, as activ
 
 
 
+
+
+
+
 ## Denoising Autoencoder(DAE)
 
 Denoising Autoencoder was published by Pascal Vincent and Yoshua Bengio, from paper "Extracting and Composing Robust Features with Denoising Autoencoder".
@@ -290,5 +294,162 @@ print(label[0])
 [This video](https://www.youtube.com/watch?v=t2NQ_c5BFOc&feature=youtu.be) explains on DAE, of which speaker is co-author of the paper, Hugo Larochelle. 
 
 
+
+
+
+
+## Sparse Autoencoder
+
+
+### Complete / Overcomplete
+
+Usually siganl can be represented using linear combination of basis functions like case of Fourier or Wavelet.
+
+In most case, dimension of basis function is equal to dimension of the input data. In this case, we say "**complete**".
+
+![equation](https://latex.codecogs.com/gif.latex?%5Cnewline%20x%20%3D%20As%20%5Cnewline%20x%20%5Cin%20R%5E%7Bn%7D%2C%20A%20%5Cin%20R%5E%7Bn%5Ctimes%20n%7D%5Cnewline%20s%20%5Cin%20R%5E%7Bn%7D)
+
+The above equation  shows that data x is derived from set of basis function A multiplies vector s. And dimension is all equal to n.
+
+In this case, if A is determined, vector s becomes the representation of vector x. 
+
+If it's complete, dimension of x and x is same and s should be unique.
+
+
+
+Now let's look at another case.
+
+![equation](https://latex.codecogs.com/gif.latex?%5Cnewline%20x%20%3D%20As%20%5Cnewline%20x%20%5Cin%20R%5E%7Bn%7D%2C%20A%20%5Cin%20R%5E%7Bn%5Ctimes%20m%7D%5Cnewline%20s%20%5Cin%20R%5E%7Bm%7D%20%5Chspace%7B7%7D%28m%20%3E%20n%29)
+
+This shows **sparse coding**, that basis function's dimension is bigger than original data's dimension (m > n).
+
+We say **overcomplete**, when representation vector's dimension(s's dimension) is bigger than the original input data's.
+
+The advantage of having an over-complete basis is that our basis vectors are better able to capture structures and patterns inherent in the input data. 
+
+When it comes to complete case, it's unique to represent the data, but in case of overcomplete, we need to select one with specific criteria because it's not unique.
+
+Therefore, in sparse coding, we introduce the additional criterion of sparsity to resolve the degeneracy introduced by over-completeness.
+
+Here, we define sparsity as having few non-zero components or having few components not close to zero.
+
+
+### Sparse Coding
+
+Sparse coding is one way of supervised learning and it was developed to represent data more efficiently based on overcomplete basis vector.
+
+The picture below shows concept of sparse coding.
+
+
+<img src="https://github.com/jwcse/DeepLearning/blob/master/img/sparse_coding.PNG" width="400" height="300">
+	
+
+In the picture, Dictionary D contains basis vectors and data X is represented by ![equation](https://latex.codecogs.com/gif.latex?%5Calpha).
+
+In this case, only three elements are not zero, so we can say that much dense representation has been enabled.
+
+
+
+
+But important thing here is, how can we get D and ![equation](https://latex.codecogs.com/gif.latex?%5Calpha).
+
+Let's look at sparse coding cost function
+
+![equation](https://latex.codecogs.com/gif.latex?arg%20%5Chspace%7B1%7D%20%5Cmin_%7BD%2C%20A%7D%5Cleft%20%5C%7C%20X-AD%20%5Cright%20%5C%7C_%7BF%7D%5E%7B2%7D%20&plus;%20%5Cbeta%5Csum_%7Bi%2Cj%7D%5Cleft%20%7C%20a_%7Bi%2Cj%7D%20%5Cright%20%7C)
+
+The 1st term is a reconstruction term which tries to force the algorithm to provide a good representation of given X using ![equation](https://latex.codecogs.com/gif.latex?AD).
+
+And the 2nd term can be interpreted as a sparsity panalty which forces our representation of x to be sparse.
+
+(cf. Sparsity penalty function can be log penalty too. In that case, gradient-based methods can be used)
+
+The constant ![equation](https://latex.codecogs.com/gif.latex?%5Cbeta) is a scaling constant to determine the relative importance of these two contributions.
+
+
+
+
+### What is Sparse Autoencoder
+
+
+<img src="https://github.com/jwcse/DeepLearning/blob/master/img/sparse_autoencoder.PNG" width="400" height="300">
+
+Basically, when you train an autoencoder, the hidden units in the middle layer would fire (activate) too frequently, for most training samples. We don’t want this characteristic. We want to lower their activation rate so that they only activate for a small fraction of the training examples. This constraint is also called the *sparsity constraint*. It is sparse because each unit only activates to a certain type of inputs, not all of them.
+
+
+
+#### Problem in Sparse Coding & k-Sparse Autoencoder
+
+Sparse coding basically consists of two steps ; *dictionary learning* and *sparse encoding*.
+
+In *dictionary learning*, dictionary and sparse code vector is derived by training data. In this case, sparsity condition should be satisfied, but it's usually not convex function. So, whenver we use gradient-based method, there can be risk of being local minimum.
+
+To handle with this problem, a lot of methods had been published, but performance and result had been not good.
+
+
+In this situation, **k-Sparse Autoencoder** provided efficient way for sparse coding.
+
+By making constraints on activation of hidden layer at most k, sparsity condition is applied.
+
+Until k-th neuron, the result is utilized and the rest is set zero.
+
+In backpropagation, neuron with non-zero activation value is updated.
+
+These process can be regarded as *dictionary learning*, as dictionary's atom is derived with iterative training.
+
+To restate, only activating k-neurons and training weight matrix(dictionary) is identical to *dictionary learning* of **sparse coding**.
+
+The table below shows the procedure.
+
+<img src="https://github.com/jwcse/DeepLearning/blob/master/img/sparse_autoencoder_process.PNG" width="550" height="400">
+
+
+In the table, ![equation](https://latex.codecogs.com/gif.latex?supp_%7Bk%7D%28W%5E%7BT%7Dx&plus;b%29) is equal to deriving k-support vector, and process 3) is equal to updating atom with that vector.
+
+
+In encoding process, the number is ![equation](https://latex.codecogs.com/gif.latex?%5Calpha%20k) not k, because it is more efficient to use ![equation](https://latex.codecogs.com/gif.latex?%5Calpha) which is little bit bigger than 1, so that activating little more than k neurons. 
+
+Referenced from [Laon People](https://laonple.blog.me/220943887634)
+
+
+### Efficiency of k-Sparse Autencoder
+
+
+The performance of **sparse coding** is basically determined by performance of dictionary. So, in order to get good performance, it is significant to derive good weight matrix.
+
+Here, the good performance can be restated as
+	
+	-> Low similarity between atom included in a dictionary
+		
+	-> Representation of an atom using several atoms with linear combination should be difficult
+	
+	-> Coherence between atom should be small 
+	
+	-> Inner product between atom should be small!
+	
+
+Therefore, determining value k should be considerate to satisfying this :
+
+![equation](https://latex.codecogs.com/gif.latex?%5Cnewline%20%5Cmu%28W%29%20%3D%20max_%7Bi%2Cj%7D%5Cleft%20%7C%20%3Cw_%7Bi%7D%2Cw_%7Bj%7D%3E%20%5Cright%20%7C%5Cnewline%20%5Cnewline%20k%20%5Cleq%20%281&plus;%5Cmu%5E%7B-1%7D%29)
+
+
+### Performance by k-value
+
+If k value is big, local feature can be extracted. In this case, it is not appropriate for classification, but it's useful for pre-training.
+
+If k value is small(when sparsity is emphasized), too global feature can be extracted, so similar object could be classified as different category.
+
+The picture below shows visualized filters depending on different k values.
+
+We can see that (a) shows too local features and (d) shows too global feature.
+
+The best result is hown on (c).
+
+<img src="https://github.com/jwcse/DeepLearning/blob/master/img/sparse_autoencoder_result.PNG" width="600" height="500">
+
+
+In the below table, we can figure out that appropriate k-value of k-Sparse Autoencoder shows good performance compared with other unsupervised learning methods.
+
+
+<img src="https://github.com/jwcse/DeepLearning/blob/master/img/sparse_autoencoder_result2.PNG" width="500" height="500">
 
 
