@@ -32,4 +32,4 @@ The **Bayes' theorem** is used in this process.
 The oppositite concept is **Discriminatie model**, which does not concern about how the data is generated and focus on just classifying.
 
 ### Generative vs Discriminative
-<img src="https://github.com/jwcse/DeepLearning/blob/master/img/generative-discriminative.jpg" width="400" height="300">
+<img src="https://github.com/jwcse/DeepLearning/blob/master/img/generative-discriminative.jpg" width="600" height="500">
