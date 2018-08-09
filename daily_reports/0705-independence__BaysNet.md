@@ -44,7 +44,7 @@ A Bayesian network is a directed graphical model that represents independence re
 As an example, consider a model of a student’s grade g on an exam; this grade depends on several factors: 
 the exam’s difficulty d, the student’s intelligence i, his SAT score s; it also affects the quality l of the reference letter from the professor who taught the course. 
 
-<img src="https://github.com/jwcse/DeepLearning/blob/master/img/bays_net_ex.png" width="500" height="300">
+<img src="https://github.com/jwcse/DeepLearning/blob/master/img/bays_net_ex.png" width="750" height="600">
 
 Each variable is binary, except for g, which takes 3 possible values.
 Bayes net model describing the performance of a student on an exam. The distribution can be represented a product of conditional probability distributions specified by tables. 
@@ -62,7 +62,7 @@ then, a student’s grade is sampled given these parameters; finally, the recomm
 
 ### Independencies described by Directed Graphs
 Independencies can be recovered from the graph by looking at three types of structures.
- <img src="https://github.com/jwcse/DeepLearning/blob/master/img/three_types_components_of_bayes.PNG" width="400" height="300">
+ <img src="https://github.com/jwcse/DeepLearning/blob/master/img/three_types_components_of_bayes.PNG" width="830" height="600">
   * Common parent
   
     If G is of the form A←B→C, and B is observed, then A⊥C∣B. 
