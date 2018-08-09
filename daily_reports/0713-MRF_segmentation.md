@@ -173,4 +173,4 @@ if __name__ == "__main__":
 ```
 
 ### Result
-<img src="https://github.com/jwcse/DeepLearning/blob/master/img/mrf_seg_ex_result.PNG" width="500" height="200">
+<img src="https://github.com/jwcse/DeepLearning/blob/master/img/mrf_seg_ex_result.PNG" width="800" height="400">
