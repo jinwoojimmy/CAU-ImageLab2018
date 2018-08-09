@@ -1,7 +1,7 @@
 
 # 14/05/18 Daily Report
 
-1. Meeting
+## Meeting
 - Research Topic Decision
   Under project managing graduate student's direction, had a meeting to figure out which topic to focus on with other students.
 We decided to conduct research on 'Autoencoder'. We divided the topic into three parts, and I was delegated to research on 
@@ -13,7 +13,7 @@ user account to access linux server which contains GPU and appropriate for runni
 - Study Guideline  
   After deciding the research topic, each students received links for study and research from the graduate student. 
   
-2. Environment Configuration and Installation
+## Environment Configuration and Installation
 - install anaconda3
 - install pytorch
 - install PyCharm IDE
@@ -21,7 +21,7 @@ user account to access linux server which contains GPU and appropriate for runni
 3. Study on Pytorch Basics
 - Pytorch includes various kinds of computational library and methods.
 
-```{.python}
+```python
   
 import torch
 import numpy as np
