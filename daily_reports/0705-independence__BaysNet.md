@@ -13,7 +13,7 @@ A graph 𝐺 = (𝑉, 𝐸) is defined by a set of vertices 𝑉 and a set of ed
 
 A set 𝑆 ⊆ 𝑉 is an independent set if there does not exist an edge in 𝐸 joining any pair of vertices in 𝑆.
 
-<img src="https://github.com/jwcse/DeepLearning/blob/master/img/independent_set_ex.PNG" width="500" height="500">
+<img src="https://github.com/jwcse/DeepLearning/blob/master/img/independent_set_ex.PNG" width="600" height="900">
 
 
 ### Representation of Independence Structure with Graphical Model 
