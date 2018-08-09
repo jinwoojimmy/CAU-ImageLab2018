@@ -25,7 +25,7 @@ Regularization "smoothes" the trained graph in view-point of the graph.
 <img src="https://github.com/jwcse/DeepLearning/blob/master/img/regularization.PNG" width="700" height="400">
  
 
-### Mathematical Representation 
+#### Mathematical Representation 
 
 * L2 Regularization
   L2 regularization can be represented in this equation.
@@ -62,7 +62,7 @@ Regularization "smoothes" the trained graph in view-point of the graph.
  We can figure out that regularization is performed subtracting a constant depending on sign of w.
  
  
- ### L2 vs L1
+ #### L2 vs L1
  
  In case of L1, regularization is performed by subtracting constant value. So, small value of weights almost converge to zero, and several important weights will be remained.
  
@@ -87,12 +87,12 @@ Regularization "smoothes" the trained graph in view-point of the graph.
  
  There are efficient way to generate good training data.
  
- ### Affine Transform
+ #### Affine Transform
  With affine transform, we can get good enough training dataset.
  
  <img src="https://github.com/jwcse/DeepLearning/blob/master/img/data_aug_affine.PNG" width="700" height="500">
  
- ### Elastic Distortion
+ #### Elastic Distortion
  
  Microsoft developed this method to generate effictive training dataset.
  
@@ -111,7 +111,7 @@ Regularization "smoothes" the trained graph in view-point of the graph.
  
  #### Overview
  
- <img src="https://github.com/jwcse/DeepLearning/blob/master/img/elastic_dropout.PNG" width="600" height="400">
+ <img src="https://github.com/jwcse/DeepLearning/blob/master/img/dropout.PNG" width="600" height="400">
  
  As the picture above shows, training is performed with omitting certain neurons.
  
