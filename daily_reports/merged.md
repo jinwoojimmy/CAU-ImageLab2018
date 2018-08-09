@@ -72,6 +72,8 @@ The purpose of our program is to
 * Study on paper
 * Design web application for labeling
 
+### 5th Week, August
+* Implement web application for labeling
 
 # 0514-meeting_setting.md
 
@@ -267,8 +269,12 @@ torch.eig(torch.FloatTensor(4, 4), True)   # eigen value, eigen vector
 Machine learning can be divided into two part. One is supervised learning and the other one is unsupervised learning. 
 In case of supervised learning, input data for training includes class label. The class label represents which group does the given
 instance of data belongs. Therefore, it needs effort for labeling on each data. On the other hand, unsupervised learning does not
-need such effort, and feature is extracted by relation between dataset. Autoencoder is one of the most famous example of
-unsupervised learning, and this is what we are going to look at.
+need such effort, and feature is extracted by relation between dataset. 
+
+Autoencoder is one of the most famous example of unsupervised learning, and this is what we are going to look at.
+
+<img src="https://github.com/jwcse/DeepLearning/blob/master/img/AE_overview.PNG" width="700" height="350">
+
 
   Let's consider input data (![equation](https://latex.codecogs.com/gif.latex?x%5E%7B%28i%29%7D), ![equation](https://latex.codecogs.com/gif.latex?y%5E%7B%28i%29%7D)) ,
 which is i-th instance's attribute among input data.
@@ -426,6 +432,132 @@ The **chain rule** is equal to combining each node's derivative in order to get 
 <img src="https://github.com/jwcse/DeepLearning/blob/master/img/backpropagation2.png" width="500" height="400">
 
 
+
+
+# 0518-ML_category.md
+# 18/05/18 Daily Report
+
+
+
+## Machine Learning
+
+  * *"Field of study that gives computers the ability to learn without being explicitly programmed" - Arthur Samuel*
+  
+  * Machine learning is a subset of artificial intelligence in the field of computer science that often uses statistical techniques to give computers the ability to "learn" (i.e., progressively improve performance on a specific task) with data, without being explicitly programmed 
+ [from Wikipedia](https://en.wikipedia.org/wiki/Machine_learning)
+ 
+### Category
+
+There are mainly three categories in machine learning.
+
+#### Supervised Learning
+
+##### Overview
+According to dictionary, supervisor has meaning of instructor who leads and teaches a student.
+
+In this context, we can say that the supervised learning means to predict based on past knowledge. 
+
+<img src="https://github.com/jwcse/DeepLearning/blob/master/img/supervised_learning_overview.PNG" width="800" height="400">
+
+
+In order to obtain good training result, there should be a lot of training data, and the data should have generalization property.
+
+##### Procedure
+
+1. Select the training data for training
+
+
+2. Collect the training data
+
+3. Decide how to represent the feature of the input
+
+  * Usually represented in vector form.
+
+  * Curse of dimensionality should be considered ; number of feature shouldn't be too large.
+
+4. Decide training algorithm 
+
+  * There are a lot of algorithms and their properties are also diverse. Appropriate algorithm should be selected based on purpose.  
+
+5. Train with the data and algorithm
+
+6. Evaluate the accuracy of the designed model
+
+##### Supervised Learning Algorithms
+
+These are representative algorithms of supervised learning.
+
+  - Artifical neural network
+  
+  - Boosting
+  
+  - Bayesian statistics
+  
+  - Decision tree
+  
+  - Gaussian process regression
+  
+  - Nearest neighbor algorithm
+  
+  - Support vector machine
+  
+  - Random forests
+  
+  - Symbolic machine learning
+  
+  - Ensembles of classifiers
+  
+
+
+#### Unsupervised Learning
+
+In case of supervised learning, computing error function or loss function is possible through training.
+
+In other words, model can be updated with feedback. However, for unsupervised learning, this is not possible.
+
+
+##### Overview
+
+Unsupervised machine learning is the machine learning task of inferring a function that describes the structure of "unlabeled" data 
+(i.e. data that has not been classified or categorized).
+
+Since the examples given to the learning algorithm are unlabeled, there is no straightforward way to evaluate the accuracy of the structure that is produced by the algorithm—one feature that distinguishes unsupervised learning from supervised learning and reinforcement learning.
+
+[Wiki](https://en.wikipedia.org/wiki/Unsupervised_learning)
+
+
+##### Category
+
+  * Clustering
+    - k-means
+    - mixture models
+  
+  * Neural netowrk
+    - Autoencoder
+    - Hebbian Learning
+    
+  * Dimensionality reduction
+    - PCA
+    - ICA
+    - SVD
+    - Non-negative matrix factorization
+
+
+The picture below shows an example of unsupervised learning ; *k-means-clustering*.
+
+<img src="https://github.com/jwcse/DeepLearning/blob/master/img/k-means-clustering.png" width="700" height="400">
+
+
+
+
+#### Reinforcement Learning
+
+Reinforcement learning (RL) is an area of machine learning, inspired by behaviorist psychology[citation needed],
+concerned with how software agents ought to take actions in an environment so as to maximize some notion of cumulative reward. 
+
+Like training a dog with reward and punishment, training is performed so as to get reward as much as possible. 
+
+This is being researched on game theory, control theory, simulation-based optimizatino, multi-agent systems, genetic systems and so on.
 
 
 # 0521-autogradient_regression.md
@@ -1002,6 +1134,152 @@ for epoch in range(2):
 
 ```
 
+# 0525-overfitting_sol.md
+# 18/05/18 Daily Report
+
+
+
+## Solution for Overfitting
+
+
+Overfitting is "the production of an analysis that corresponds too closely or exactly to a particular set of data, and may therefore fail to fit additional data or predict future observations reliably."
+
+There are solutions for this.
+
+First of all, we may consider increase of training data. However, this takes a lot of cost, effort and time. 
+
+In addition, as quantity of training data increases, it takes more time to train.  
+
+
+Now, let's look at practical solutions for this.
+
+### Regularization
+
+Regularization is kind of penalty condition.
+
+Regularization "smoothes" the trained graph in view-point of the graph.
+
+<img src="https://github.com/jwcse/DeepLearning/blob/master/img/regularization.PNG" width="700" height="400">
+ 
+
+#### Mathematical Representation 
+
+* L2 Regularization
+  L2 regularization can be represented in this equation.
+  
+  ![equation](https://latex.codecogs.com/gif.latex?C%20%3D%20C_%7B0%7D%20&plus;%20%5Cfrac%7B%5Clambda%7D%7B2n%7D%20%5Csum_%7Bw%7Dw%5E%7B2%7D)
+  
+  - C0 : original cost function
+  - n : number of training data
+  - ![equation](https://latex.codecogs.com/gif.latex?%5Clambda) : regularization variable
+  - w : weight
+   
+  As regularization term is included, training is proceeded not only to minimize C0 but also to minimize w values.
+  
+  If we compute the newly defined cost function with derivative of w, new w is determined like this.
+  
+  ![equation](https://latex.codecogs.com/gif.latex?%5Cnewline%20w%20%5Crightarrow%20w%20-%20%5Ceta%20%5Cfrac%7B%5Cpartial%20C_%7B0%7D%7D%7B%5Cpartial%20w%7D%20-%20%5Cfrac%7B%5Ceta%20%5Clambda%7D%7Bn%7Dw%20%5Cnewline%20%5Cnewline%20%5Cnewline%20%3D%20%281-%20%5Cfrac%7B%5Ceta%20%5Clambda%7D%7Bn%7D%29w%20-%20%5Ceta%20%5Cfrac%7B%5Cpartial%20C_%7B0%7D%7D%7B%5Cpartial%20w%7D)
+ 
+ 
+ In the above equation, let's look at the term ![equation](https://latex.codecogs.com/gif.latex?%281-%20%5Cfrac%7B%5Ceta%20%5Clambda%7D%7Bn%7D%29w).
+ 
+ As coefficient of w is less than 1 and bigger than zero, it will be proceeded in w decreasing way.
+ 
+ We call this *"weight decay"*. With this "weight decay", we can prevent certain weight from being too large.
+ 
+ * L1 Regularization
+ ![equation](https://latex.codecogs.com/gif.latex?C%3DC_%7B0%7D&plus;%5Cfrac%7B%5Clambda%7D%7Bn%7D%5Csum_%7Bw%7D%5Cleft%20%7C%20w%20%5Cright%20%7C)
+ 
+ In L1 regularization, first-order term is placed instead of 2nd-order term in L2 case.
+ 
+ If we compute the cost function with derivative of w,
+ 
+ ![equation](https://latex.codecogs.com/gif.latex?w%20%5Crightarrow%20w%5E%7B%27%7D%20%3D%20w%20-%20%5Cfrac%7B%5Ceta%20%5Clambda%7D%7Bn%7Dsgn%28w%29%20-%20%5Ceta%20%5Cfrac%7B%5Cpartial%20C_%7B0%7D%7D%7B%5Cpartial%20w%7D)
+ 
+ We can figure out that regularization is performed subtracting a constant depending on sign of w.
+ 
+ 
+ #### L2 vs L1
+ 
+ In case of L1, regularization is performed by subtracting constant value. So, small value of weights almost converge to zero, and several important weights will be remained.
+ 
+ Therefore, in order to extract several meaningful value, L1 regularization is more effective than L2.
+ 
+ This is appropriate for *sparse model*.
+ 
+ However, as mathmatical representation shows, there are non-differential points, so we should be careful whenever applying gradiendt based learning.
+ 
+ 
+ 
+ ### Data augmentation
+ 
+ Data augmentation is about how to increase training data in efficient way.
+ 
+ Let's assume that we want to develop new algorithm to detect cursive letter.
+ 
+  <img src="https://github.com/jwcse/DeepLearning/blob/master/img/cursive_MNIST.PNG" width="400" height="400">
+ 
+ 
+ In that case, it is difficult to obtain large enough data and enter the data on database.
+ 
+ There are efficient way to generate good training data.
+ 
+ #### Affine Transform
+ With affine transform, we can get good enough training dataset.
+ 
+ <img src="https://github.com/jwcse/DeepLearning/blob/master/img/data_aug_affine.PNG" width="700" height="500">
+ 
+ #### Elastic Distortion
+ 
+ Microsoft developed this method to generate effictive training dataset.
+ 
+ As the picture below shows, generate displacement vector in diverse way.
+ 
+ <img src="https://github.com/jwcse/DeepLearning/blob/master/img/elastic_distortion.PNG" width="600" height="400">
+ 
+ 
+ ### Dropout
+ 
+ As number of hidden layers increase, training performance gets better.
+ 
+ But, when it comes to size of the layer, there's problem of overfitting.
+ 
+ In such a case, dropout can be a good solution.
+ 
+ #### Overview
+ 
+ <img src="https://github.com/jwcse/DeepLearning/blob/master/img/dropout.PNG" width="600" height="400">
+ 
+ As the picture above shows, training is performed with omitting certain neurons.
+ 
+ The training is performed iteratively with selecting dropouts(the omitted neurons) randomly.
+ 
+ #### Effect
+ * Voting Effect
+ 
+ When training on diminished layers of neural net, the remaining layer is trained and it can be somewhat overfitted.
+ 
+ But on next mini0batch, another layer is somewhat overfitted as the prior case.
+ 
+ If these procedure is conducted randomly and iteratively, there can be average effect by voting.
+ 
+ In conclusion, there will be similar effect of regularization..
+ 
+ 
+ * Avoid Co-adaptation
+ 
+ If certain neuron's bias or weight has enormous value, this can bring about bad performance of training.
+ 
+ But when dropout is accompanied in training, we can avoid the worried situation.
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
 # 0528-cnn.md
 # 28/05/18 Daily Report
 
@@ -1167,7 +1445,12 @@ By doing so, we can reduce quantity of computation singnificantly.
 
 Solution : *Deep Residual Learning*(ResNEt) ; by passing connection -> help propagate gradient gradients 
 
+### Famous paper on CNN
 
+#### Lecun - "Gradient-based learning applied to document recognition"
+[link](http://vision.stanford.edu/cs598_spring07/papers/Lecun98.pdf)
+#### Krizhevsky - "ImageNet classification with deep convolutional neural network"
+[link](https://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf)
 
 
 # 0601-meeting.md
@@ -3296,7 +3579,7 @@ Referenced from [GunhoChoi's code](https://github.com/GunhoChoi/PyTorch-FastCamp
 
 """
     Referenced from 
-            https://github.com/GunhoChoi/PyTorch-FastCampus/blob/master/08_Autoencoder/1_Convolutional_Autoencoder.ipynb
+    https://github.com/GunhoChoi/PyTorch-FastCampus/blob/master/08_Autoencoder/1_Convolutional_Autoencoder.ipynb
    
     Convolutional Autoencoder
         - MNIST dataset
@@ -3328,8 +3611,11 @@ mnist_train = dset.MNIST("./", train=True, transform=transforms.ToTensor(), targ
 mnist_test = dset.MNIST("./", train=False, transform=transforms.ToTensor(), target_transform=None, download=True)
 
 # Set DataLoader
-train_loader = torch.utils.data.DataLoader(mnist_train,batch_size=batch_size, shuffle=True,num_workers=2,drop_last=True)
-test_loader = torch.utils.data.DataLoader(mnist_test,batch_size=batch_size, shuffle=False,num_workers=2,drop_last=True)
+train_loader = torch.utils.data.DataLoader(mnist_train,batch_size=batch_size, 
+                    shuffle=True,num_workers=2,drop_last=True)
+
+test_loader = torch.utils.data.DataLoader(mnist_test,batch_size=batch_size, 
+                    shuffle=False,num_workers=2,drop_last=True)
 
 
 ## Model & Optimizer
