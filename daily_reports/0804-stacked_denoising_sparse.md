@@ -341,7 +341,7 @@ Sparse coding is one way of supervised learning and it was developed to represen
 The picture below shows concept of sparse coding.
 
 
-<img src="https://github.com/jwcse/DeepLearning/blob/master/img/sparse_coding.PNG" width="400" height="300">
+<img src="https://github.com/jwcse/DeepLearning/blob/master/img/sparse_coding.PNG" width="700" height="500">
 	
 
 In the picture, Dictionary D contains basis vectors and data X is represented by ![equation](https://latex.codecogs.com/gif.latex?%5Calpha).
@@ -371,7 +371,7 @@ The constant ![equation](https://latex.codecogs.com/gif.latex?%5Cbeta) is a scal
 ### What is Sparse Autoencoder
 
 
-<img src="https://github.com/jwcse/DeepLearning/blob/master/img/sparse_autoencoder.PNG" width="400" height="300">
+<img src="https://github.com/jwcse/DeepLearning/blob/master/img/sparse_autoencoder.PNG" width="800" height="600">
 
 Basically, when you train an autoencoder, the hidden units in the middle layer would fire (activate) too frequently, for most training samples. We don’t want this characteristic. We want to lower their activation rate so that they only activate for a small fraction of the training examples. This constraint is also called the *sparsity constraint*. It is sparse because each unit only activates to a certain type of inputs, not all of them.
 
