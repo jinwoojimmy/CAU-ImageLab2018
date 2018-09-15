@@ -253,3 +253,114 @@ This part wass not included in paper. In order to help easy understanding, this 
 
 
 
+
+# GoogLeNet(Inception)
+
+Subtitle : Inception(Going Deeper with Convolutions)
+
+## Summary
+
+This model showed good performance at ImageNet Large-Scale Visual Recognition Challenge 2014(ILSVRC14).
+
+* Compared with AlexNet, 12 times less parameters and more accurate
+
+* Unlike traditional way of building single convolutional operation to build up the network, designed layer to 
+compute a lot. This is similar with *Network in Network* paper.
+
+* In case of *Network in Network*, convolutional filter was substituted by MLP. In this paper, *Inception module* 
+substitutes the same part.
+
+## Introduction
+
+Generally in case of CNN(Convolutional Neural Network), the deeper the network becomes, the better the performance the more layers you have. However, the problem with this approach is that the deeper the network, the more parameters you need to learn. What's particularly noticeable about this is the deep-seated Convolution.
+
+
+In most CNN, as images go through a resolution operation, channels get bigger and the heat and width are reduced. So let's take a closer look at a specific example. 
+
+
+Let's say there's data with a size of 192 x 28 x 28 (C x H x W). Suppose the filter is 5x5, the stripe is 1, and the padding is 2. If you had 32 filters, the result would be 32 x 28 x 28. The problem arises here. Each filter has a size of 192 x 5 x 5, and the result is 32 x 28 x 28, so the total required operation is 192 x 5 x 32 x 28 x 28. It requires a massive operation of 1.2 million. It's too much of a burden to stack these computations up.
+
+This is not the only problem. What if you have to design a model yourself? Setting up a hyperparameter, such as the size of a filter, will begin with a problem. But the use of a concept, **Inception** can solve this problem.
+
+
+## Network in Network
+
+Before understanding **Inception**, it is necessary to figure out the concept of *Network in Network*.
+
+<img src="https://github.com/jwcse/DeepLearning/blob/master/img/net_in_net.jpg" width="900" height="700">
+
+Convolution Operation is a method of using linear operation and non-linear operation, as if scanning the filter for input images. 
+In the *Network in Network* paper, tried to change this convolution operation to a Neural Network.
+
+MLP(Multi-layer Perceptron) itself is kind of function approximator, so this can be seen as effort to find out awesome function instead of convolution.
+
+The picture below shows the concept of MLPConv.
+
+<img src="https://github.com/jwcse/DeepLearning/blob/master/img/mlpconv_layer.png" width="850" height="500">
+
+
+And, below picture shows overall structure of *Network in Network*.
+
+<img src="https://github.com/jwcse/DeepLearning/blob/master/img/net_in_net_overall.png" width="850" height="500">
+
+
+<img src="https://github.com/jwcse/DeepLearning/blob/master/img/1x1_conv.jpg" width="850" height="500">
+
+
+The important thing we should concentrate on is that, this process(utilizing n-layer of MLP Conv) is equal to computing convolution and then applying 1x1 convolution.
+
+
+Finally, the meaningful thing in *Network in Network* is the introduction of **1x1 convolution**. Because of **1x1 convolution**, it has been possible to implement moer non-linear function. Furthermore, this operation includes pooling in channel unit. Thus, if we set number of 1x1 convolution less than input channel number, dimension reduction is possible!
+
+
+## Inception Module
+
+The convolution filter uses multiple filters for local construction to repeatedly generate output. So in case of network in *Network in Network*, if the purpose was to *dense* and deepen the sparse structure with MLP, this paper's purpose is to perform something between convolution and MLPConv.
+
+
+
+<img src="https://github.com/jwcse/DeepLearning/blob/master/img/1x1_conv.jpg" width="750" height="330">
+
+
+
+### Characteristic
+* Proceed 1x1, 3x3, 5x5 convolution parallelly, and then concate
+
+
+* Apply diverse size of receptive field
+
+
+* More dense form compared with traditional convolutional filter
+
+
+* In order to make convolution more efficient, channel reduction is applied. 1x1 convolution is added before 3x3 or 5x5.
+
+
+* Designed to compute more complex calculation, without much increase of computation.
+
+
+* Especially, controling 1x1 convolution, quantity of computation can be controlled. So, accuracy-speed trade-off can be determined.
+
+
+
+
+# Xception
+
+
+
+# MobileNets
+
+
+# SqueezeNet
+
+
+# AlexNet
+
+
+# VGGNet
+
+
+# ResNet
+
+
+# DenseNet
