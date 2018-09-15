@@ -322,6 +322,19 @@ The convolution filter uses multiple filters for local construction to repeatedl
 <img src="https://github.com/jwcse/DeepLearning/blob/master/img/1x1_conv.jpg" width="750" height="330">
 
 
+## Full Structure
+
+### Overall Structure
+<img src="https://github.com/jwcse/DeepLearning/blob/master/img/googlenet.png" width="850" height="330">
+
+
+### Table on Architecture
+
+<img src="https://github.com/jwcse/DeepLearning/blob/master/img/googlenet_arch_table.png" width="850" height="600">
+
+
+
+
 
 ### Characteristic
 * Proceed 1x1, 3x3, 5x5 convolution parallelly, and then concate
