@@ -2,7 +2,7 @@
     
 ## About
 
-The report contains studies, discussion and notes based on research performed in Image Lab, Chung-Ang University at 2018 summer.
+The report contains studies, discussion and notes based on research performed in Image Lab, Chung-Ang University at 2018 September to October.
 
 ## Goals
 
@@ -357,11 +357,85 @@ The convolution filter uses multiple filters for local construction to repeatedl
 
 
 
-# Xception
-
-
 
 # MobileNets
+
+MobileNets: Efficient Convolutional Neural Networks for Mobile Vision Applications
+
+
+## Introduction
+
+There are two main approaches for small network.
+
+One is to compress the trained model, and the other one is to train the small network.
+
+This paper concentrates on the latter concept.
+
+This kind of work is valuable in that deep learning can be performed inside small devices or smartphones.
+
+
+## Main Idea
+
+In MobileNets, the most important idea is *Depthwise Separable Convolution*.
+
+*Width Multiplier* and *Resolution Multiplier* are parameters to reduce the overall size more. 
+
+
+### Depthwise Separable Convolution
+
+This concept was firstly introduced in Google's *Xception* paper.
+
+#### Concept Overview
+<img src="https://github.com/jwcse/DeepLearning/blob/master/img/depthwise_sep_conv.PNG" width="800" height="550">
+
+
+#### VS Standard
+
+The picture below shows why quantity of computation is reduced compared with standard version. 
+
+<img src="https://github.com/jwcse/DeepLearning/blob/master/img/depthwise_sep_conv.PNG" width="800" height="550">
+
+#### Applied Module
+
+<img src="https://github.com/jwcse/DeepLearning/blob/master/img/depthwise_apply.PNG" width="800" height="550">
+
+
+### Width Multiplier : Thinner Models
+α(Alpha) is the parameter that ultimately determines the width of the network, which adjusts the number of input and output channels of each layer by α ratio.
+
+α value is usually selected among 1, 0.75, 0.5 and 0.25.
+
+This way can be applied on any network, but size-accuracy trade-off exists.
+
+If the structure is resized, training should be done from the start again.
+
+### Resolution Multiplier : Reduced Representation
+ρ,
+as its name suggests, the parameter that determines the input resolution is adjusted to that ratio.
+
+
+This parameter is applied on input image and each layer's intermediate representation.
+
+For example, input image of 224 size can be decreased like 192, 160, 128.
+
+
+## Architecture
+
+<img src="https://github.com/jwcse/DeepLearning/blob/master/img/mobilenet_arch_table.PNG" width="700" height="950">
+
+
+## Result
+
+The result below shows that with losing 1 percent of accuracy, computation has decrease by 9 times.
+
+<img src="https://github.com/jwcse/DeepLearning/blob/master/img/depth_vs_full_conv_mobilenet.PNG" width="800" height="530">
+
+
+
+<img src="https://github.com/jwcse/DeepLearning/blob/master/img/mobilenets_add_result.png" width="700" height="820">
+
+
+
 
 
 # SqueezeNet
@@ -374,6 +448,12 @@ The convolution filter uses multiple filters for local construction to repeatedl
 
 
 # ResNet
+
+
+
+# Xception
+
+
 
 
 # DenseNet
