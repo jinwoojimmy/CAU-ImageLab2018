@@ -435,7 +435,100 @@ The result below shows that with losing 1 percent of accuracy, computation has d
 <img src="https://github.com/jwcse/DeepLearning/blob/master/img/mobilenets_add_result.png" width="700" height="820">
 
 
+# FPGA
+## 1 Introduction
+Field-Programmable Logic Array.
 
+<img src="https://github.com/jwcse/CAU-ImageLab2018/blob/master/img/FPGA_simple_structure.jpg" width="850" height="700">
+
+
+FPGA is an integrated circuit which is repetitively arranged with programmable logic blocks, surrounded with programmable interconnects and connected with I/O blocks.  
+
+FPGA provide the next generation in the programmable logic devices. 
+
+The word 'Field' in the name refers to the ability of the gate arrays to be programmed for a specific function by the user instead of by the manufacturer of the device. 
+
+The word 'Array' is used to indicate a series of columns and rows of gates that can be programmed by the end user. 
+
+It is now very common to design and update features without changing hardware. In fact, most of these things go through the process of updating programs in ROMs on systems using microprocessors.
+
+It will be really comfortable if integrated circuit can be updated like software program. FPGA enables this. 
+
+## 2 Structure
+
+
+<img src="https://github.com/jwcse/CAU-ImageLab2018/blob/master/img/FPGA_structure.jpg" width="850" height="700">
+
+### 2.1 Logic Block
+Gate, Flip-flop, multiplexer, memory is included.
+
+Basically, LUT and D-flip-flop is main component.
+
+Logic block is called LAB(Logic Array Block) by Altera and called CLB(Configurable Logic Block) by Xilinx.
+
+<img src="https://github.com/jwcse/CAU-ImageLab2018/blob/master/img/FPGA_logic_block.jpg" width="850" height="700">
+
+
+### 2.2 I/O Block
+Circuits for constructing input and output circuits for design purposes are arranged such as external pins and I/O protection circuits.
+
+
+### 2.3 Programmable Interconnects
+It consists of an electrical connection switch between the logical block and the wire to connect the signal between the logical block and the I/O cell. 
+
+The length of wiring plays an important role in the structure of the FPGA because it has a very important effect on the operating speed of the digital circuit.
+
+Delay time can be determined depending on how to set routing.
+
+
+## 3 vs ASIC
+Almost all products, including mobile phones, MP3s, and PMPs, contain application specific integrated circuit (ASIC). 
+
+These ASICs are produced in high-performance processes in mass production but at low cost. 
+
+But it's only true if it's mass production. In order for an ASIC developer to design an IC and turn it into a chip, he or she will have to pay the cost of non-Recurrent Engineering (NRE) Cost to receive samples of the IC he designed. 
+
+Currently, you have to pay between 50 and 60 million won if you use the 0.18um process, and the NRE costs hundreds of millions of won if you use the newer process. 
+
+cf> Non-Recurrent Engineering (NRE) Cost: First cost of researching, designing and testing new products
+
+The problem is that if these expensive samples don't work as design errors, then the cost will be the same. Nevertheless, if the volume of production is huge, the cost is buried and chips are produced at a low price.
+
+On the other hand, the price of each FPGA is prohibitively high compared to the price of ASIC, but in case of small mass production, NRE is not included in ASIC, which is relatively cheaper than ASIC. 
+
+In addition, for technologies that are not optimized yet, the use of FPGA will be most effective as you simply reprogram hardware upon upgrade.
+
+As such, the FPGA is the optimal solution for products with relatively small volume but high cost and hardware upgrades.
+
+
+## 4 vs CPLD
+Similar to FPGA as a complex programmable logic device (CPLD), CPLDs are also used to implement normal digital logics.
+
+Each FPGA vendor also produces CPLDs, which Xilinx has a CPLD product line called CoolRunner and Altera call Max. 
+
+There is a different internal structure than the FPGA, but the difference between the users is as follows:
+
+First, the logic size that can be implemented with CPLD is relatively small compared to FPGA. In addition, SRAM, Adder/Multiplayer, complex I/O, and multiple hardwired logics are not available in CPLDs. Therefore, CPLDs are suitable for making glue logics or relatively simple sequential logics.
+
+CPLD is much cheaper than FPGA. And because it's usually flash-based, you don't need a device like an external program memory chip, like the FPGA, and you don't need the number of superfluous disks that are typically needed. Therefore, the system BOM Cost can also be used in sensitive areas. And because CPLDs consume less power than FPGA, we can consider using power-sensitive systems.
+
+## 5 Selection of FPGA
+There are many different types of FPGA in the commercial market, so designers can design depending on the circuit you want the flag to be used, you should select the most suitable element and use it. 
+
+In case of FPGA selection, the number of gates, inputs and outputs of devices, maximum operating speed and device price
+serve as an important element.
+
+Optimized design improves circuit performance, so the FPGA design environment is also an important factor.
+
+These are species of FPGA.
+
+
+<img src="https://github.com/jwcse/CAU-ImageLab2018/blob/master/img/FPGA_species.PNG" width="850" height="700">
+
+
+## 6 FPGA Design Process
+
+<img src="https://github.com/jwcse/CAU-ImageLab2018/blob/master/img/FPGA_design_process.PNG" width="730" height="930">
 
 
 # SqueezeNet
