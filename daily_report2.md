@@ -393,7 +393,7 @@ This concept was firstly introduced in Google's *Xception* paper.
 
 The picture below shows why quantity of computation is reduced compared with standard version. 
 
-<img src="https://github.com/jwcse/DeepLearning/blob/master/img/depthwise_sep_conv.PNG" width="800" height="550">
+<img src="https://github.com/jwcse/DeepLearning/blob/master/img/standard_vs_depthwise.PNG" width="800" height="550">
 
 #### 2.1.3 Applied Module
 
