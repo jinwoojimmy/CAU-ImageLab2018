@@ -258,7 +258,7 @@ This part wass not included in paper. In order to help easy understanding, this 
 
 Subtitle : Inception(Going Deeper with Convolutions)
 
-## Summary
+## 1 Summary
 
 This model showed good performance at ImageNet Large-Scale Visual Recognition Challenge 2014(ILSVRC14).
 
@@ -270,7 +270,7 @@ compute a lot. This is similar with *Network in Network* paper.
 * In case of *Network in Network*, convolutional filter was substituted by MLP. In this paper, *Inception module* 
 substitutes the same part.
 
-## Introduction
+## 2 Introduction
 
 Generally in case of CNN(Convolutional Neural Network), the deeper the network becomes, the better the performance the more layers you have. However, the problem with this approach is that the deeper the network, the more parameters you need to learn. What's particularly noticeable about this is the deep-seated Convolution.
 
@@ -283,7 +283,7 @@ Let's say there's data with a size of 192 x 28 x 28 (C x H x W). Suppose the fil
 This is not the only problem. What if you have to design a model yourself? Setting up a hyperparameter, such as the size of a filter, will begin with a problem. But the use of a concept, **Inception** can solve this problem.
 
 
-## Network in Network
+## 3 Network in Network
 
 Before understanding **Inception**, it is necessary to figure out the concept of *Network in Network*.
 
@@ -313,7 +313,7 @@ The important thing we should concentrate on is that, this process(utilizing n-l
 Finally, the meaningful thing in *Network in Network* is the introduction of **1x1 convolution**. Because of **1x1 convolution**, it has been possible to implement moer non-linear function. Furthermore, this operation includes pooling in channel unit. Thus, if we set number of 1x1 convolution less than input channel number, dimension reduction is possible!
 
 
-## Inception Module
+## 4 Inception Module
 
 The convolution filter uses multiple filters for local construction to repeatedly generate output. So in case of network in *Network in Network*, if the purpose was to *dense* and deepen the sparse structure with MLP, this paper's purpose is to perform something between convolution and MLPConv.
 
@@ -322,13 +322,13 @@ The convolution filter uses multiple filters for local construction to repeatedl
 <img src="https://github.com/jwcse/DeepLearning/blob/master/img/1x1_conv.jpg" width="750" height="330">
 
 
-## Full Structure
+## 5 Full Structure
 
-### Overall Structure
+### 5.1 Overall Structure
 <img src="https://github.com/jwcse/DeepLearning/blob/master/img/googlenet.png" width="850" height="330">
 
 
-### Table on Architecture
+### 5.2 Table on Architecture
 
 <img src="https://github.com/jwcse/DeepLearning/blob/master/img/googlenet_arch_table.png" width="850" height="600">
 
@@ -336,7 +336,7 @@ The convolution filter uses multiple filters for local construction to repeatedl
 
 
 
-### Characteristic
+### 5.3 Characteristic
 * Proceed 1x1, 3x3, 5x5 convolution parallelly, and then concate
 
 
@@ -363,7 +363,7 @@ The convolution filter uses multiple filters for local construction to repeatedl
 MobileNets: Efficient Convolutional Neural Networks for Mobile Vision Applications
 
 
-## Introduction
+## 1 Introduction
 
 There are two main approaches for small network.
 
@@ -374,33 +374,33 @@ This paper concentrates on the latter concept.
 This kind of work is valuable in that deep learning can be performed inside small devices or smartphones.
 
 
-## Main Idea
+## 2 Main Idea
 
 In MobileNets, the most important idea is *Depthwise Separable Convolution*.
 
 *Width Multiplier* and *Resolution Multiplier* are parameters to reduce the overall size more. 
 
 
-### Depthwise Separable Convolution
+### 2.1 Depthwise Separable Convolution
 
 This concept was firstly introduced in Google's *Xception* paper.
 
-#### Concept Overview
+#### 2.1.1 Concept Overview
 <img src="https://github.com/jwcse/DeepLearning/blob/master/img/depthwise_sep_conv.PNG" width="800" height="550">
 
 
-#### VS Standard
+#### 2.1.2 VS Standard
 
 The picture below shows why quantity of computation is reduced compared with standard version. 
 
 <img src="https://github.com/jwcse/DeepLearning/blob/master/img/depthwise_sep_conv.PNG" width="800" height="550">
 
-#### Applied Module
+#### 2.1.3 Applied Module
 
 <img src="https://github.com/jwcse/DeepLearning/blob/master/img/depthwise_apply.PNG" width="800" height="550">
 
 
-### Width Multiplier : Thinner Models
+### 2.2 Width Multiplier : Thinner Models
 α(Alpha) is the parameter that ultimately determines the width of the network, which adjusts the number of input and output channels of each layer by α ratio.
 
 α value is usually selected among 1, 0.75, 0.5 and 0.25.
@@ -409,7 +409,7 @@ This way can be applied on any network, but size-accuracy trade-off exists.
 
 If the structure is resized, training should be done from the start again.
 
-### Resolution Multiplier : Reduced Representation
+### 2.3 Resolution Multiplier : Reduced Representation
 ρ,
 as its name suggests, the parameter that determines the input resolution is adjusted to that ratio.
 
@@ -419,12 +419,12 @@ This parameter is applied on input image and each layer's intermediate represent
 For example, input image of 224 size can be decreased like 192, 160, 128.
 
 
-## Architecture
+## 3 Architecture
 
 <img src="https://github.com/jwcse/DeepLearning/blob/master/img/mobilenet_arch_table.PNG" width="700" height="950">
 
 
-## Result
+## 4 Result
 
 The result below shows that with losing 1 percent of accuracy, computation has decrease by 9 times.
 
