@@ -531,22 +531,103 @@ These are species of FPGA.
 <img src="https://github.com/jwcse/CAU-ImageLab2018/blob/master/img/FPGA_design_process.PNG" width="730" height="930">
 
 
-# SqueezeNet
+# Optimization for Learning
+
+The purpose of deep learning is to figure out the parameters to reduce the value of loss function as possible as we can.
+
+This is connected to finding out optimized value for parameters, and we call this **optimization**.
+
+In neural-net, this is uneasy problem because space for parameter is broad and a lot of parameters exist as layers go deeper.
+
+## 1 SGD
+
+Using slope of parameters, getting closer to the most optimized to titled way is called **SGD**, which stands for Stochastic Gradient Descent.
+
+![equation](https://latex.codecogs.com/gif.latex?W%5Cleftarrow%20%5Ceta%20%5Cfrac%7B%5Cpartial%20L%7D%7B%5Cpartial%20W%7D)
+
+Assuming *W* as parameter for update and *L* as loss function, we can write down the equation as above.
+
+(![equation](https://latex.codecogs.com/gif.latex?%5Ceta) stands for learning rate or step size. This is usually set between 0.01 and 0.001)
+
+This is simple implementation for SGD.
+
+```python
+class SGD:
+    def __init__(self, lr=0.01):
+        self.lr = lr
+        
+    # params, grads are dictionary variables    
+    def update(self, params, grads):
+        for key in params.keys():
+            params[key] -= self.lr * grads[key]
+       
+optimizer = SGD()
+...
+
+```
 
 
-# AlexNet
+SGD is simple and easy for us to implement, but this can be inefficient.
+
+Because SGD is *anisotropy* function, which means character is determined according to direction(slope), the path for optimization is not eficient.
+
+The drawback can be represented like this picuture, which shows zig-zag path.
 
 
-# VGGNet
+<img src="https://github.com/jwcse/CAU-ImageLab2018/blob/master/img/SGD_zigzag.png" width="770" height="520">
 
 
-# ResNet
+## 2 Momentum
+
+
+The **Momentum** method is literally giving a kind of 'inertia' to the process of moving through the Gradient Descent. 
+
+Apart from the current direction of travel through the Gradient, it is a method of moving a certain amount further in that direction while remembering how it was moved in the past. 
+
+In the form of the formula: When v is a moving vector, the movement can be expressed in the following manner.
+
+![equation](https://latex.codecogs.com/gif.latex?%5Cnewline%20v%5Cleftarrow%20%5Calpha%20v%20-%20%5Ceta%20%5Cfrac%7B%5Cpartial%20L%7D%7B%5Cpartial%20W%7D%20%5Cnewline%5Cnewline%20W%20%5Cleftarrow%20W%20&plus;%20v)
+
+```python
+
+import numpy as np
+
+
+class Momentum:
+
+    """모멘텀 SGD"""
+
+    def __init__(self, lr=0.01, momentum=0.9):
+        self.lr = lr
+        self.momentum = momentum
+        self.v = None
+        
+    def update(self, params, grads):
+        if self.v is None:
+            self.v = {}
+            for key, val in params.items():                                
+                self.v[key] = np.zeros_like(val)
+                
+        for key in params.keys():
+            self.v[key] = self.momentum*self.v[key] - self.lr*grads[key] 
+            params[key] += self.v[key]
 
 
 
-# Xception
+
+```
+
+<img src="https://github.com/jwcse/CAU-ImageLab2018/blob/master/img/Momentum.gif" width="780" height="600">
 
 
 
 
-# DenseNet
+It can be expected that the Momentum method will have the effect of exiting the local minima as shown above.
+
+If using the existing SGD, it is not possible to move into the local minima on the left side as the gradient becomes zero. 
+
+On the other hand, using the momentum method requires storing each variable the amount of travel in the past, in addition to the existing variables W, which requires twice the memory for the variable.
+
+
+
+
