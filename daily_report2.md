@@ -629,5 +629,272 @@ If using the existing SGD, it is not possible to move into the local minima on t
 On the other hand, using the momentum method requires storing each variable the amount of travel in the past, in addition to the existing variables W, which requires twice the memory for the variable.
 
 
+## 3 Nesterov Accelerated Gradient (NAG)
+
+Nesterov Accelerated Gradient (NAG) is based on the Momentum method, but the method in which the Gradient is calculated is slightly different. 
+
+For a quick understanding, let's look at the following picture first.
+
+
+<img src="https://github.com/jwcse/CAU-ImageLab2018/blob/master/img/NAG.jpeg" width="780" height="330">
+
+
+In the Momentum method, the gradient and moment step in the current position are calculated and combined independently when calculating vector v. 
+
+In NAG, however, consider the moment step first, and then obtain the gradient at the moment to move the gradient step.
+
+This is simple implementation of NAG.
+
+```python
+
+class Nesterov:
+
+    """Nesterov's Accelerated Gradient (http://arxiv.org/abs/1212.0901)"""
+    # NAG는 모멘텀에서 한 단계 발전한 방법이다. (http://newsight.tistory.com/224)
+    
+    def __init__(self, lr=0.01, momentum=0.9):
+        self.lr = lr
+        self.momentum = momentum
+        self.v = None
+        
+    def update(self, params, grads):
+        if self.v is None:
+            self.v = {}
+            for key, val in params.items():
+                self.v[key] = np.zeros_like(val)
+            
+        for key in params.keys():
+            self.v[key] *= self.momentum
+            self.v[key] -= self.lr * grads[key]
+            params[key] += self.momentum * self.momentum * self.v[key]
+            params[key] -= (1 + self.momentum) * self.lr * grads[key]
+
+
+```
+
+
+NAG allow us to move more effectively than Momentum. 
+
+In the case of momentum, we can go much further by the inertia than we expect, but in case of NAG, how to move is decided after moving little bit.
+
+Thus, while enjoying the benefits of quick mobilization, you may find it much easier to brake at the right time to stop.
+
+
+## 4 Adagrad(Adaptive Gradient)
+
+In neural-net, learning rate is important. If this value is too small, training-time takes long and training is not well-performed in the opposite case.
+
+For the efficient technique to determine learning rate, there is *learning rate decay*. This method slowly decreases learning rate as training is proceeded. In this concept, learning rate is set large in initial stage and set small as time goes by.
+
+
+**Adagrad** is a method of moving the variables by setting the step size differently for each variable when updating them. 
+
+The basic idea of this algorithm is that 'the variables that have not changed much so far will increase step size, and the variables that have changed a lot so far will be smaller.'
+
+Among parameters, largely moved(largely updated) parameter's learning rate is set low.
+
+The point is that *learning rate decay is applied for each parameter's element*.
+
+
+We can write down the equation and code like below.
+
+![equation](https://latex.codecogs.com/gif.latex?%5Cnewline%20h%5Cleftarrow%20h&plus;%20%5Cfrac%7B%5Cpartial%20L%7D%7B%5Cpartial%20W%7D%5Codot%20%5Cfrac%7B%5Cpartial%20L%7D%7B%5Cpartial%20W%7D%20%5Cnewline%20%5Cnewline%20%5Cnewline%20W%5Cleftarrow%20W%20-%20%5Ceta%20%5Cfrac%7B1%7D%7B%5Csqrt%7Bh%7D%7D%5Cfrac%7B%5Cpartial%20L%7D%7B%5Cpartial%20W%7D)
+
+
+```python
+
+class AdaGrad:
+
+    """AdaGrad"""
+
+    def __init__(self, lr=0.01):
+        self.lr = lr
+        self.h = None
+        
+    def update(self, params, grads):
+        if self.h is None:
+            self.h = {}
+            for key, val in params.items():
+                self.h[key] = np.zeros_like(val)
+            
+        for key in params.keys():
+            self.h[key] += grads[key] * grads[key]
+            params[key] -= self.lr * grads[key] / (np.sqrt(self.h[key]) + 1e-7) # Adding small value 1e-7 ; prevents dividing by zero.
+
+
+```
+
+
+## 5 RMSprop
+
+One bad thing of AdaGrad is that update is not proceeded as past slope is multiplied and added.
+
+In other words, quantity of update becomes zero if training is performed for a long time.
+
+This method complements the drawback of AdaGrad.
+
+Instead of utilizing 'past-slope', new slope information is reflected.
+
+This is called *EMA(Exponential Moving Average)*, that highly dimishes effect of past-slope.
+
+
+```python
+
+class RMSprop:
+
+    """RMSprop"""
+
+    def __init__(self, lr=0.01, decay_rate = 0.99):
+        self.lr = lr
+        self.decay_rate = decay_rate
+        self.h = None
+        
+    def update(self, params, grads):
+        if self.h is None:
+            self.h = {}
+            for key, val in params.items():
+                self.h[key] = np.zeros_like(val)
+            
+        for key in params.keys():
+            self.h[key] *= self.decay_rate
+            self.h[key] += (1 - self.decay_rate) * grads[key] * grads[key]
+            params[key] -= self.lr * grads[key] / (np.sqrt(self.h[key]) + 1e-7)  
+
+```
+
+
+## 6 Adam
+
+*Momentum + AdaGrad*
+
+This method was suggested at 2015.
+
+Adam configures three hyperparameters. One is for learning rate, The other two : coefficient for 1st-order momentum and coefficeint for 2nd-order momentum. According to this method's inventer, 0.9 and 0.999 is great enough value for each hyperparameter.
+
+```python
+
+class Adam:
+
+    """Adam (http://arxiv.org/abs/1412.6980v8)"""
+
+    def __init__(self, lr=0.001, beta1=0.9, beta2=0.999):
+        self.lr = lr
+        self.beta1 = beta1
+        self.beta2 = beta2
+        self.iter = 0
+        self.m = None
+        self.v = None
+        
+    def update(self, params, grads):
+        if self.m is None:
+            self.m, self.v = {}, {}
+            for key, val in params.items():
+                self.m[key] = np.zeros_like(val)
+                self.v[key] = np.zeros_like(val)
+        
+        self.iter += 1
+        lr_t  = self.lr * np.sqrt(1.0 - self.beta2**self.iter) / (1.0 - self.beta1**self.iter)         
+        
+        for key in params.keys():
+            #self.m[key] = self.beta1*self.m[key] + (1-self.beta1)*grads[key]
+            #self.v[key] = self.beta2*self.v[key] + (1-self.beta2)*(grads[key]**2)
+            self.m[key] += (1 - self.beta1) * (grads[key] - self.m[key])
+            self.v[key] += (1 - self.beta2) * (grads[key]**2 - self.v[key])
+            
+            params[key] -= lr_t * self.m[key] / (np.sqrt(self.v[key]) + 1e-7)
+            
+            #unbias_m += (1 - self.beta1) * (grads[key] - self.m[key]) # correct bias
+            #unbisa_b += (1 - self.beta2) * (grads[key]*grads[key] - self.v[key]) # correct bias
+            #params[key] += self.lr * unbias_m / (np.sqrt(unbisa_b) + 1e-7)
+
+```
+
+
+## Comparison
+
+For SGD, Momentum, AdaGrad and Adam, compared methods with following code.
+
+The picture below shows the result.
+
+```python
+
+# coding: utf-8
+import sys, os
+sys.path.append(os.pardir)  # 부모 디렉터리의 파일을 가져올 수 있도록 설정
+import numpy as np
+import matplotlib.pyplot as plt
+from collections import OrderedDict
+#from common.optimizer import *   # d
+
+
+def f(x, y):
+    return x**2 / 20.0 + y**2
+
+
+def df(x, y):
+    return x / 10.0, 2.0*y
+
+init_pos = (-7.0, 2.0)
+params = {}
+params['x'], params['y'] = init_pos[0], init_pos[1]
+grads = {}
+grads['x'], grads['y'] = 0, 0
+
+
+optimizers = OrderedDict()
+optimizers["SGD"] = SGD(lr=0.95)
+optimizers["Momentum"] = Momentum(lr=0.1)
+optimizers["AdaGrad"] = AdaGrad(lr=1.5)
+optimizers["Adam"] = Adam(lr=0.3)
+
+idx = 1
+
+for key in optimizers:
+    optimizer = optimizers[key]
+    x_history = []
+    y_history = []
+    params['x'], params['y'] = init_pos[0], init_pos[1]
+    
+    for i in range(30):
+        x_history.append(params['x'])
+        y_history.append(params['y'])
+        
+        grads['x'], grads['y'] = df(params['x'], params['y'])
+        optimizer.update(params, grads)
+    
+
+    x = np.arange(-10, 10, 0.01)
+    y = np.arange(-5, 5, 0.01)
+    
+    X, Y = np.meshgrid(x, y) 
+    Z = f(X, Y)
+    
+    # 외곽선 단순화
+    mask = Z > 7
+    Z[mask] = 0
+    
+    # 그래프 그리기
+    plt.subplot(2, 2, idx)
+    idx += 1
+    plt.plot(x_history, y_history, 'o-', color="red")
+    plt.contour(X, Y, Z)
+    plt.ylim(-10, 10)
+    plt.xlim(-10, 10)
+    plt.plot(0, 0, '+')
+    #colorbar()
+    #spring()
+    plt.title(key)
+    plt.xlabel("x")
+    plt.ylabel("y")
+    
+plt.show()
+
+
+```
+
+
+<img src="https://github.com/jwcse/CAU-ImageLab2018/blob/master/img/optimizer_compare.PNG" width="740" height="740">
+
+
 
 
